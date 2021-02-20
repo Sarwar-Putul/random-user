@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random User</title>
+</head>
+<style>
+    .container {
+        justify-content: center;
+        display: grid;
+        color: indigo;
+        border: 2px solid indigo;
+        margin: 1px;
+    }
+    
+    .title {
+        font-size: 50px;
+        color: rgb(253, 253, 253);
+        align-items: center;
+        background-color: rgb(179, 13, 170);
+    }
+    
+    .photo img {
+        align-items: center;
+        border: 1px solid black;
+        padding: 0.5em;
+        border-radius: 2px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div>
+            <h1 class="title">RANDOM USER</h1>
+        </div>
+        <div class="photo">
+            <img id="user-pic" src="" alt="">
+        </div>
+
+        <div class=" userInfo">
+            <H1 id="user-name"></H1>
+            <H4 id="user-gender"></H4>
+            <H4 id="user-phone"></H4>
+            <H4 id="user-email"></H4>
+            <H4 id="user-location"></H4>
+        </div>
+    </div>
+
+
+
+    <script>
+        function userInformation() {
+            fetch('https://randomuser.me/api/')
+                .then(res => res.json())
+                .then(data => {
+                    const user = data.results[0];
+                    const image = user.picture;
+                    const userImage = ` ${image.large}`;
+                    //console.log(userImage);
+                    const name = user.name;
+                    const userName = `${name.title} ${name.first} ${name.last}`;
+                    const gender = user.gender;
+                    const phone = user.phone;
+                    const email = user.email;
+                    const location = user.location;
+                    const locationUser = ` ${location.city}, ${location.state}, ${location.zip}, ${location.country}`;
+
+                    const nameUser = document.getElementById('user-name').innerText = userName;
+                    const userGender = document.getElementById('user-gender').innerText = 'Gender:- ' + gender;
+                    const userPhone = document.getElementById('user-phone').innerText = 'Number:- ' + phone;
+                    const userEmail = document.getElementById('user-email').innerText = 'Mail:- ' + email;
+                    const userLocation = document.getElementById('user-location').innerText = 'Address:- ' + locationUser;
+                    const imageUser = document.getElementById('user-pic').src = userImage;
+                    // console.log(user.picture.large);
+                })
+        }
+        userInformation()
+
+        setInterval(() => {
+            userInformation()
+        }, 10000);
+    </script>
+</body>
+
+</html>
